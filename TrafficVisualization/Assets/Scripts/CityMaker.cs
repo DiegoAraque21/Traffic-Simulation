@@ -45,17 +45,21 @@ public class CityMaker : MonoBehaviour
                 if(position == new Vector3(0, 0, 0))
                 {
                     tile = Instantiate(car1, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 }
                 else if (position == new Vector3(25, 0, 0))
                 {
                     tile = Instantiate(car2, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 } else if (position == new Vector3(0, 0, 25))
                 {
                     tile = Instantiate(car3, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 }
                 else if (position == new Vector3(25,0,25))
                 {
                     tile = Instantiate(car4, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 }
                 tile = Instantiate(roadPrefab, position, Quaternion.identity);
                 tile.transform.parent = transform;
@@ -65,17 +69,21 @@ public class CityMaker : MonoBehaviour
                 if(position == new Vector3(0, 0, 0))
                 {
                     tile = Instantiate(car1, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 }
                 else if (position == new Vector3(25, 0, 0))
                 {
                     tile = Instantiate(car2, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 } else if (position == new Vector3(0, 0, 25))
                 {
                     tile = Instantiate(car3, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 }
                 else if (position == new Vector3(25,0,25))
                 {
                     tile = Instantiate(car4, position, Quaternion.identity);
+                    tile.transform.parent = transform;
                 }
                 tile = Instantiate(roadPrefab, position, Quaternion.Euler(0, 90, 0));
                 tile.transform.parent = transform;
