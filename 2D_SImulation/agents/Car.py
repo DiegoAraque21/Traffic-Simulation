@@ -1,5 +1,6 @@
 from mesa import Agent
-
+from agents.Obstacle import Obstacle
+from Node import GraphNode
 
 class Car(Agent):
     """
@@ -8,7 +9,7 @@ class Car(Agent):
         unique_id: Agent's ID 
         direction: Randomly chosen direction chosen from one of eight directions
     """
-    def __init__(self, unique_id, model):
+    def __init__(self, unique_id, model, graph, end_node):
         """
         Creates a new random agent.
         Args:
@@ -16,6 +17,9 @@ class Car(Agent):
             model: Model reference for the agent
         """
         super().__init__(unique_id, model)
+        self.graph = graph
+        self.end_node = end_node
+        self.best_route = []
 
     def move(self):
         """ 
@@ -27,8 +31,11 @@ class Car(Agent):
         """ 
         Determines the new direction it will take, and then moves
         """
-        pass
-
+        
+        if len(self.best_route) == 0:
+            self.best_route = self.astar( GraphNode(self) )
+        else:
+            print(self.best_route)
         # TODO: get next position direction
 
         # if nextPosition.isAvailable:
@@ -36,3 +43,7 @@ class Car(Agent):
         #     return 
         # Else pass
     
+
+    def astar(self, start_node):
+        """Returns a list of tuples as a path from the given start to the given end in the given board"""
+        pass
