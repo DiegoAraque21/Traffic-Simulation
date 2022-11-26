@@ -37,8 +37,8 @@ class RandomModel(Model):
                         self.grid.place_agent(agent, (c, self.height - r - 1))
                         newRow.append(GraphNode(agent))
 
-                    elif col in ["S", "s"]:
-                        agent = Traffic_Light(f"tl_{r*self.width+c}", self, False if col == "S" else True, int(dataDictionary[col]))
+                    elif col in ["U", "R", "L", "A"]:
+                        agent = Traffic_Light(f"tl_{r*self.width+c}", self, False if (col == "U" or col =="A") else True, int(dataDictionary[col]), col)
                         self.grid.place_agent(agent, (c, self.height - r - 1))
                         self.schedule.add(agent)
                         self.traffic_lights.append(agent)
@@ -62,14 +62,16 @@ class RandomModel(Model):
         
 
         #Iterar por todos los vehiculos y asigarnles una copia de la matriz 
-        spawn_arr = [(0,24), (23,24), (23,0), (0,0)]
+
+
+        spawn_arr = [(23,24)]
         for i in range(len(spawn_arr)):
             car_matrix = self.global_matrix.copy()
-            randomDestination = random.choice(self.destinies)
-            carAgent = Car(8000+i, self, car_matrix, randomDestination)
+            print(len(self.destinies))
+            carAgent = Car(8000+i, self, car_matrix, self.destinies[10])
+            print(self.destinies[10].position)
             self.grid.place_agent(carAgent, spawn_arr[i])
             self.schedule.add(carAgent)
-
 
             
         self.num_agents = N

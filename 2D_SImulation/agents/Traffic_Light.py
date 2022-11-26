@@ -4,7 +4,7 @@ class Traffic_Light(Agent):
     """
     Traffic light. Where the traffic lights are in the grid.
     """
-    def __init__(self, unique_id, model, state = False, timeToChange = 10):
+    def __init__(self, unique_id, model, state = False, timeToChange = 10, type = None):
         super().__init__(unique_id, model)
         """
         Creates a new Traffic light.
@@ -16,6 +16,7 @@ class Traffic_Light(Agent):
         """
         self.state = state
         self.timeToChange = timeToChange
+        self.type = type
 
     def step(self):
         """ 

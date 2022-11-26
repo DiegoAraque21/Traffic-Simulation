@@ -1,10 +1,11 @@
 class GraphNode():
     """A box class for A* Pathfinding"""
 
-    def __init__(self, agent = None, parent = None):
+    def __init__(self, agent = None, parent = None, position = None):
+
         self.agent = agent
         self.parent = parent
-        self.position = agent.pos
+        self.position = position or agent.pos
         self.adjacentNodes = []
 
         #El costo de moverme de la celda inicial a la posicion actual 
@@ -17,6 +18,11 @@ class GraphNode():
         self.f = 0
 
     def __eq__(self, other):
-        return self.agent.pos == other.agent.pos
+        if self.agent == None and other.agent == None:
+            return self.position == other.position
+        elif self.agent == None or other.agent:
+            return self.position == other.agent.pos
+        else:
+            return self.agent.pos == other.agent.pos
     
 
