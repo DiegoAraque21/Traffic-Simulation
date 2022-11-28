@@ -21,12 +21,16 @@ class RandomModel(Model):
 
         self.traffic_lights = []
         self.destinations = []
+        self.spawn_cars_cells = [(0,0), (0,24), (23,0), (23,24)]
         self.tl_direction = {
             "U": "Up",
             "R": "Right",
             "L": "Left",
             "A": "Down",
         }
+        self.num_agents = N
+        self.running = True
+        self.counter = 0
 
         with open('./map_templates/2022_base.txt') as baseFile:
             lines = baseFile.readlines()
@@ -68,27 +72,57 @@ class RandomModel(Model):
                         self.destinations.append((c, self.height - r - 1))
                         self.schedule.add(agent)
 
-        self.num_agents = N
-        self.running = True
 
-        # Spawn a cars
-        cars = [(22,17)]
-        destination = self.destinations[13]
-        for i in range(len(cars)):
-            car = Car(8000+i, self, destination)
-            self.grid.place_agent(car, cars[i])
-            self.schedule.add(car)
+        self.spawn_cars()        
+
 
         # Spawn obstacle cars to test
-        obstacle_cars = [(19,23), (20,23), (21,23), (22,23), (22,22), (22,21)]
-        for i in range(len(obstacle_cars)):
-            obstacle_car = ObstacleCar(9000+i, self)
-            self.grid.place_agent(obstacle_car, obstacle_cars[i])
+        # obstacle_cars = [(19,23), (20,23), (21,23), (22,23), (22,22), (22,21)]
+        # for i in range(len(obstacle_cars)):
+        #     obstacle_car = ObstacleCar(9000+i, self)
+        #     self.grid.place_agent(obstacle_car, obstacle_cars[i])
 
 
     def step(self):
         '''Advance the model by one step.'''
+        self.spawn_cars()
+        
         if self.schedule.steps % 10 == 0:
             for agent in self.traffic_lights:
                 agent.state = not agent.state
         self.schedule.step()
+
+    
+    def spawn_cars(self):
+        """Spawn cars at the corners of the grid."""
+        # For each spawn spot
+        for cell in self.spawn_cars_cells:
+
+            if self.random.random() < 0.2:
+                destination = self.random.choice(self.destinations) # Random destination
+                cell_agents = self.get_cell_agents(cell) # Get cell agents
+
+                # Search a car in agents
+                for a in cell_agents:
+                    if isinstance(a, Car):
+                        continue # Don't spawn
+
+                # Spawn car
+                car = Car(8000+self.counter, self, destination)
+                self.grid.place_agent(car, cell)
+                self.schedule.add(car)
+                self.counter += 1
+
+
+    def get_cell_agents(self, position):
+        """Get list of agents of a cell."""
+        # Get neighbors including center cell
+        neighbors = self.grid.get_neighbors(position, False, True)
+
+        # Get agents in position
+        agents = []
+        for n in neighbors:
+            if n.pos == position:
+                agents.append(n)
+
+        return agents

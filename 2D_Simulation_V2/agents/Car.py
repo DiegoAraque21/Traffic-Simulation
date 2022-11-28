@@ -8,7 +8,7 @@ class Car(Agent):
     """
     Agent that moves randomly.
     Attributes:
-        unique_id: Agent's ID 
+        unique_id: Agent's ID
         direction: Randomly chosen direction chosen from one of eight directions
     """
     
@@ -23,6 +23,7 @@ class Car(Agent):
         super().__init__(unique_id, model)
         self.end = end
         self.route = {}
+        self.blocked_cells = []
 
 
     def step(self):
@@ -64,7 +65,8 @@ class Car(Agent):
 
             # If the next pos isn't available, but there is no traffic, wait
             return
-
+        
+        # Move agent to next cell
         self.model.grid.move_agent(self, next_pos)
 
 
@@ -124,16 +126,18 @@ class Car(Agent):
         normal_route={}
 
         # If there is a value in the route for the end, it means the end was reached successfully
-        if route[self.end]:
+        if route.get(self.end):
             # Get normal route by inverting the path of route
             cell = self.end
             while cell != start:
                 normal_route[route[cell]] = cell
                 cell = route[cell]
 
+            self.blocked_cells = []
             return normal_route
 
         # If end wasn't reached, then there is no valid route
+        self.blocked_cells = []
         return None
 
     
@@ -171,6 +175,13 @@ class Car(Agent):
         if curr_direction in ["Left", "Right"]:
             forbidden_directions[possible_cells[0]] = "Up"
             forbidden_directions[possible_cells[2]] = "Down"
+
+        # Filter blocked cells
+        if len(self.blocked_cells) != 0:
+            for cell in possible_cells:
+                # If cell is blocked remove it
+                if cell in self.blocked_cells:
+                    possible_cells.remove(cell)
 
         # Get the next possible cells depending on the roads
         results = []
@@ -308,7 +319,8 @@ class Car(Agent):
         cell = self.pos # Begin with next position
         while counter < n_positions:
             cell = self.route.get(cell)
-            cells.append(cell)
+            if cell:
+                cells.append(cell)
             counter += 1
 
         # If there is a red light in those next positions, there is no real traffic so wait
@@ -328,8 +340,14 @@ class Car(Agent):
                 if isinstance(a, Car) or isinstance(a, ObstacleCar):
                     n_cars += 1 # Increase counter
 
-        # Return if true is there are many cars, because there is traffic
-        return n_cars >= 5
+        # iF true is there are many cars, because there is traffic
+        traffic = n_cars >= 5
+
+        if traffic:
+            # Add blocked cells to prevent getting a route over them
+            self.blocked_cells = cells
+            
+        return traffic # Return result
             
 
     def change_route(self):
