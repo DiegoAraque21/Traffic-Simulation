@@ -29,7 +29,7 @@ class RandomModel(Model):
             "A": "Down",
         }
         self.running = True
-        self.counter = 0
+        self.cars_counter = 0
 
         with open('./map_templates/2022_base.txt') as baseFile:
             lines = baseFile.readlines()
@@ -71,46 +71,52 @@ class RandomModel(Model):
                         self.destinations.append((c, self.height - r - 1))
                         self.schedule.add(agent)
 
-
+        # Spawn initial cars
         self.spawn_cars()        
 
-
-        # Spawn obstacle cars to test
         # obstacle_cars = [(19,23), (20,23), (21,23), (22,23), (22,22), (22,21)]
         # for i in range(len(obstacle_cars)):
         #     obstacle_car = ObstacleCar(9000+i, self)
         #     self.grid.place_agent(obstacle_car, obstacle_cars[i])
 
+        # car = Car(f"c_{self.cars_counter}", self, self.destinations[12])
+        # self.grid.place_agent(car, (22, 17))
+        # self.schedule.add(car)
+
 
     def step(self):
         '''Advance the model by one step.'''
+        # Spawn cars randomly
         self.spawn_cars()
         
+        # Change traffic lights each 10 steps
         if self.schedule.steps % 10 == 0:
             for agent in self.traffic_lights:
                 agent.state = not agent.state
+
         self.schedule.step()
 
     
     def spawn_cars(self):
         """Spawn cars at the corners of the grid."""
-        # For each spawn spot
+        # For each spawn cell
         for cell in self.spawn_cars_cells:
-
+            
+            # Spawn with probability
             if self.random.random() < 0.2:
                 destination = self.random.choice(self.destinations) # Random destination
                 cell_agents = self.get_cell_agents(cell) # Get cell agents
 
-                # Search a car in agents
+                # If the cell alrady has car
                 for a in cell_agents:
                     if isinstance(a, Car):
                         continue # Don't spawn
 
                 # Spawn car
-                car = Car(8000+self.counter, self, destination)
+                car = Car(f"c_{self.cars_counter}", self, destination)
                 self.grid.place_agent(car, cell)
                 self.schedule.add(car)
-                self.counter += 1
+                self.cars_counter += 1
 
 
     def get_cell_agents(self, position):

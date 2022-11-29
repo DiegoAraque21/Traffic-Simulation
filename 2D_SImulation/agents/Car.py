@@ -21,7 +21,7 @@ class Car(Agent):
             model: Model reference for the agent
         """
         super().__init__(unique_id, model)
-        self.end = end
+        self.end = end # Destination cell
         self.route = {}
         self.blocked_cells = []
 
@@ -33,11 +33,10 @@ class Car(Agent):
 
         # If car has arrived to the end
         if self.pos == None or self.pos == self.end:
-            return # Await until destiny removes car
+            return # Await until destination agent removes car
 
         # If there isn't a route
         if not self.route:
-            # If there are no blocked cells
             self.route = self.get_route(self.pos) # Get route
             return
 
@@ -73,13 +72,14 @@ class Car(Agent):
     def get_route(self, start):
         """Find the best route from current position to destination."""
 
-        # Maps to store values
+        # Dictionaries to store values
         g_values = {}
         f_values = {}
 
         # Init all g and f values of the cells at infinite
         for i in range(self.model.width):
             for j in range(self.model.height):
+                # Dictionaries will have as key the cell
                 g_values[(i, j)] = float('inf')
                 f_values[(i, j)] = float('inf')
 
@@ -89,7 +89,7 @@ class Car(Agent):
 
         # Create a priority queue to store wich cells are better options for the route
         cells = PriorityQueue()
-        # The priority will be the lowest f value, then the h value
+        # The priority will be the lowest f value, then the lowest h value
         cells.put((f_values[start], h_value_start, start))
 
         route = {} # Dictionary to store the previous route cell of a current cell
@@ -123,21 +123,23 @@ class Car(Agent):
                     route[possible_cell] = curr_cell
 
         # The route map its in reverse order, its useful to get from end to start, so we we need to invert it
-        normal_route={}
+        normal_route = {}
 
         # If there is a value in the route for the end, it means the end was reached successfully
         if route.get(self.end):
             # Get normal route by inverting the path of route
             cell = self.end
             while cell != start:
+                # Now, the previous cell will be the key, and the next cell the value
                 normal_route[route[cell]] = cell
                 cell = route[cell]
 
-            self.blocked_cells = []
+            self.blocked_cells = [] # Clean blocked cells
+
             return normal_route
 
         # If end wasn't reached, then there is no valid route
-        self.blocked_cells = []
+        self.blocked_cells = [] # Clean blocked cells
         return None
 
     
@@ -145,7 +147,7 @@ class Car(Agent):
         """Get the euclidian distance from one cell to another one."""
         x1, y1 = cell1
         x2, y2 = cell2
-        return math.sqrt(abs(x1 - x2) + abs(y1 - y2))
+        return math.sqrt(abs(x1 - x2)**2 + abs(y1 - y2)**2)
 
 
     def get_possible_next_cells(self, cell):
@@ -178,10 +180,10 @@ class Car(Agent):
 
         # Filter blocked cells
         if len(self.blocked_cells) != 0:
-            for cell in possible_cells:
+            for possible_cell in possible_cells:
                 # If cell is blocked remove it
-                if cell in self.blocked_cells:
-                    possible_cells.remove(cell)
+                if possible_cell in self.blocked_cells:
+                    possible_cells.remove(possible_cell)
 
         # Get the next possible cells depending on the roads
         results = []
@@ -214,10 +216,10 @@ class Car(Agent):
         front_cell = self.get_front_cell(self.pos)
 
         # Search front cell position in traffic lights
-        for i in range(len(self.model.traffic_lights)):
+        for tl in self.model.traffic_lights:
             # If traffic light posistion is front cell
-            if front_cell == self.model.traffic_lights[i].pos:
-                return not self.model.traffic_lights[i].state # Return true if its red
+            if front_cell == tl.pos:
+                return not tl.state # Return true if its red
 
         return False
 
@@ -245,27 +247,13 @@ class Car(Agent):
         # Get neighbors including center cell
         neighbors = self.model.grid.get_neighbors(position, False, True)
 
-        # Find a road in the given position
+        # Find a road at the given position
         for n in neighbors:
             if isinstance(n, Road) and n.pos == position:
                 return n.direction
 
-        # If no road was founded in the position
+        # If no road was found in the position
         return None
-
-
-    def get_cell_agents(self, position):
-        """Get list of agents of a cell."""
-        # Get neighbors including center cell
-        neighbors = self.model.grid.get_neighbors(position, False, True)
-
-        # Get agents in position
-        agents = []
-        for n in neighbors:
-            if n.pos == position:
-                agents.append(n)
-
-        return agents
 
 
     def check_road_availability(self, position):
@@ -288,7 +276,7 @@ class Car(Agent):
         available = True
         for road in roads_to_check:
             # Get road agents
-            agents = self.get_cell_agents(road)
+            agents = self.model.get_cell_agents(road)
 
             # Variables to store if agents were founded
             found_road = False
@@ -334,7 +322,7 @@ class Car(Agent):
         n_cars = 0
         for cell in cells:
             # Get cell agents
-            agents = self.get_cell_agents(cell)
+            agents = self.model.get_cell_agents(cell)
             for a in agents:
                 # If there is a car
                 if isinstance(a, Car) or isinstance(a, ObstacleCar):

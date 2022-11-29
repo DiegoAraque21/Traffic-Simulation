@@ -53,11 +53,9 @@ with open('./map_templates/2022_base.txt') as baseFile:
     width = len(lines[0])-1
     height = len(lines)
 
-model_params = {"N":5}
-
 grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
 
-server = ModularServer(RandomModel, [grid], "Traffic Base", model_params)
+server = ModularServer(RandomModel, [grid], "Traffic Base")
                        
 server.port = 8521 # The default
 server.launch()
