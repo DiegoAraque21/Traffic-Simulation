@@ -30,7 +30,13 @@ def getAgents():
         for (w, x, z) in randomModel.grid.coord_iter():
             for agent in w:
                 if isinstance(agent, Car):
-                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y":0, "z":z})
+                    agentPositions.append({
+                        "id": str(agent.unique_id), 
+                        "x": x,
+                        "y":0, 
+                        "z":z, 
+                        "arrived": agent.arrived
+                    })
         
         return jsonify({'positions':agentPositions})
 

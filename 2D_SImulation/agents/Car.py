@@ -24,6 +24,7 @@ class Car(Agent):
         self.end = end # Destination cell
         self.route = {}
         self.blocked_cells = []
+        self.arrived = False
 
 
     def step(self):
@@ -33,6 +34,7 @@ class Car(Agent):
 
         # If car has arrived to the end
         if self.pos == None or self.pos == self.end:
+            self.arrived = True
             return # Await until destination agent removes car
 
         # If there isn't a route
