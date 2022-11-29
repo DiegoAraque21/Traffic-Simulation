@@ -1,7 +1,7 @@
 from model import RandomModel
-from mesa.visualization.modules import CanvasGrid, BarChartModule
+from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.ModularVisualization import ModularServer
-from model import Car, Destination, Road, Traffic_Light, Obstacle
+from model import Car, Destination, Road, Traffic_Light, Obstacle, ObstacleCar
 
 def agent_portrayal(agent):
     if agent is None: return
@@ -23,7 +23,7 @@ def agent_portrayal(agent):
 
     if (isinstance(agent, Traffic_Light)):
         portrayal["Color"] = "red" if not agent.state else "green"
-        portrayal["Layer"] = 0
+        portrayal["Layer"] = 1
         portrayal["w"] = 0.8
         portrayal["h"] = 0.8
 
@@ -35,7 +35,12 @@ def agent_portrayal(agent):
 
     if (isinstance(agent, Car)):
         portrayal["Color"] = "blue"
-        portrayal["Layer"] = 1
+        portrayal["Layer"] = 2
+        portrayal["r"] = 0.5
+
+    if (isinstance(agent, ObstacleCar)):
+        portrayal["Color"] = "brown"
+        portrayal["Layer"] = 2
         portrayal["r"] = 0.5
 
     return portrayal
@@ -50,7 +55,6 @@ with open('./map_templates/2022_base.txt') as baseFile:
 
 model_params = {"N":5}
 
-print(width, height)
 grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
 
 server = ModularServer(RandomModel, [grid], "Traffic Base", model_params)
