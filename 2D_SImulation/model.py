@@ -107,16 +107,18 @@ class RandomModel(Model):
                 destination = self.random.choice(self.destinations) # Random destination
                 cell_agents = self.get_cell_agents(cell) # Get cell agents
 
-                # If the cell alrady has car
+                # Check if the cell alrady has car
+                available = True
                 for a in cell_agents:
                     if isinstance(a, Car):
-                        continue # Don't spawn
+                        available = False
 
-                # Spawn car
-                car = Car(f"c_{self.cars_counter}", self, destination)
-                self.grid.place_agent(car, cell)
-                self.schedule.add(car)
-                self.cars_counter += 1
+                # Spawn car if cell available
+                if available:
+                    car = Car(f"c_{self.cars_counter}", self, destination)
+                    self.grid.place_agent(car, cell)
+                    self.schedule.add(car)
+                    self.cars_counter += 1
 
 
     def get_cell_agents(self, position):
