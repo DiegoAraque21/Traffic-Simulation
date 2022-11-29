@@ -61,7 +61,7 @@ class RandomModel(Model):
                         self.grid.place_agent(road, (c, self.height - r - 1))
 
                     # Obstacle agents
-                    elif col == "#":
+                    elif col == "#" or col == "F":
                         agent = Obstacle(f"ob_{r*self.width+c}", self)
                         self.grid.place_agent(agent, (c, self.height - r - 1))
 
