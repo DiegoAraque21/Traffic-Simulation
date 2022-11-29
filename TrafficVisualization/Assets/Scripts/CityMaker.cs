@@ -46,49 +46,11 @@ public class CityMaker : MonoBehaviour
         for (int i=0; i<tiles.Length; i++) {
             if (tiles[i] == '>' || tiles[i] == '<') {
                 position = new Vector3(x * tileSize, 0, y * tileSize);
-                if(position == new Vector3(0, 0, 0))
-                {
-                    tile = Instantiate(car1, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                }
-                else if (position == new Vector3(23, 0, 0))
-                {
-                    tile = Instantiate(car2, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                } else if (position == new Vector3(0, 0, 23))
-                {
-                    tile = Instantiate(car3, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                }
-                else if (position == new Vector3(23,0,23))
-                {
-                    tile = Instantiate(car4, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                }
                 tile = Instantiate(roadPrefab, position, Quaternion.identity);
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == 'v' || tiles[i] == '^') {
                 position = new Vector3(x * tileSize, 0, y * tileSize);
-                if(position == new Vector3(0, 0, 0))
-                {
-                    tile = Instantiate(car1, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                }
-                else if (position == new Vector3(23, 0, 0))
-                {
-                    tile = Instantiate(car2, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                } else if (position == new Vector3(0, 0, 23))
-                {
-                    tile = Instantiate(car3, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                }
-                else if (position == new Vector3(23,0,23))
-                {
-                    tile = Instantiate(car4, position, Quaternion.identity);
-                    tile.transform.parent = transform;
-                }
                 tile = Instantiate(roadPrefab, position, Quaternion.Euler(0, 90, 0));
                 tile.transform.parent = transform;
                 x += 1;
@@ -129,7 +91,6 @@ public class CityMaker : MonoBehaviour
             } else if (tiles[i] == 'F'){
                 position = new Vector3(x * tileSize + 0.455f, 0, y * tileSize + 0.462f);
                 tile = Instantiate(fountainPrefab, position, Quaternion.identity);
-                tile.GetComponent<Renderer>().materials[0].color = Color.green;
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == '\n') {

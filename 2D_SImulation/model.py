@@ -15,7 +15,7 @@ class RandomModel(Model):
     Args:
         N: Number of agents in the simulation
     """
-    def __init__(self, N):
+    def __init__(self):
 
         dataDictionary = json.load(open("./map_templates/mapDictionary.json"))
 
@@ -28,7 +28,6 @@ class RandomModel(Model):
             "L": "Left",
             "A": "Down",
         }
-        self.num_agents = N
         self.running = True
         self.counter = 0
 
