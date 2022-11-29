@@ -35,7 +35,7 @@ def getAgents():
         return jsonify({'positions':agentPositions})
 
 @app.route('/getTrafficLights', methods=['GET'])
-def getBoxes():
+def getTrafficLights():
     global randomModel
 
     if request.method == 'GET':
@@ -43,7 +43,7 @@ def getBoxes():
         for (w, x, z) in randomModel.grid.coord_iter():
             for agent in w:
                 if isinstance(agent, Traffic_Light):
-                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y": 0, "z":z})
+                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y": 0, "z":z, "green": agent.state})
 
         return jsonify({'positions': agentPositions})
 
