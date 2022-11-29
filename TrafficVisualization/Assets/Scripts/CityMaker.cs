@@ -7,6 +7,9 @@ public class CityMaker : MonoBehaviour
     [SerializeField] TextAsset layout;
     [SerializeField] GameObject roadPrefab;
     [SerializeField] GameObject buildingPrefab;
+    [SerializeField] GameObject building2Prefab;
+    [SerializeField] GameObject building3Prefab;
+    [SerializeField] GameObject fountainPrefab;
     [SerializeField] GameObject semaphorePrefab;
     [SerializeField] GameObject semaphoreRedPrefab;
     [SerializeField] GameObject car1;
@@ -106,13 +109,27 @@ public class CityMaker : MonoBehaviour
             } else if (tiles[i] == 'D') {
                 position = new Vector3(x * tileSize, 0, y * tileSize);
                 tile = Instantiate(buildingPrefab, position, Quaternion.Euler(0, 90, 0));
-                tile.GetComponent<Renderer>().materials[0].color = Color.red;
+                tile.GetComponent<Renderer>().materials[0].color = Color.green;
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == '#') {
                 position = new Vector3(x * tileSize, 0, y * tileSize);
-                tile = Instantiate(buildingPrefab, position, Quaternion.identity);
+                // random number between 0 and 1
+                float r = Random.value;
+                if (r < 0.33) {
+                    tile = Instantiate(buildingPrefab, position, Quaternion.identity);
+                } else if (r < 0.66) {
+                    tile = Instantiate(building2Prefab, position, Quaternion.identity);
+                } else {
+                    tile = Instantiate(building3Prefab, position, Quaternion.identity);
+                }
                 tile.transform.localScale = new Vector3(1, Random.Range(0.5f, 2.0f), 1);
+                tile.transform.parent = transform;
+                x += 1;
+            } else if (tiles[i] == 'F'){
+                position = new Vector3(x * tileSize, 0, y * tileSize);
+                tile = Instantiate(fountainPrefab, position, Quaternion.Euler(0, 0, 0));
+                tile.GetComponent<Renderer>().materials[0].color = Color.green;
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == '\n') {
