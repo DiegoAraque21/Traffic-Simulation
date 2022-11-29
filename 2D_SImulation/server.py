@@ -49,7 +49,7 @@ def getTrafficLights():
         for (w, x, z) in randomModel.grid.coord_iter():
             for agent in w:
                 if isinstance(agent, Traffic_Light):
-                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y": 0, "z":z, "green": agent.state})
+                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y": 0, "z":z, "green": agent.state, "direction": agent.direction})
 
         return jsonify({'positions': agentPositions})
 

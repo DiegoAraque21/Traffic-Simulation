@@ -12,17 +12,23 @@ using UnityEngine.Networking;
 [Serializable]
 public class AgentData
 {
-    public string id;
+    public string id, direction;
     public float x, y, z;
+    public bool green, arrived;
 
-    public AgentData(string id, float x, float y, float z)
+    public AgentData(string id, string direction, float x, float y, float z, bool green = false, bool arrived = false)
     {
         this.id = id;
         this.x = x;
         this.y = y;
         this.z = z;
+        this.green = green;
+        this.arrived = arrived;
+        this.direction = direction;
     }
-}
+
+
+} 
 
 [Serializable]
 
@@ -43,6 +49,7 @@ public class AgentController : MonoBehaviour
     string updateEndpoint = "/update";
     AgentsData carsData, trafficLightsData;
     Dictionary<string, GameObject> agents;
+    Dictionary<string, GameObject> trafficLights;
     Dictionary<string, Vector3> prevPositions, currPositions;
 
     bool updated = false, started = false;
@@ -60,6 +67,8 @@ public class AgentController : MonoBehaviour
         currPositions = new Dictionary<string, Vector3>();
 
         agents = new Dictionary<string, GameObject>();
+        trafficLights = new Dictionary<string, GameObject>();
+
         
         timer = timeToUpdate;
 
@@ -140,18 +149,34 @@ public class AgentController : MonoBehaviour
  
         if (www.result != UnityWebRequest.Result.Success)
             Debug.Log(www.error);
-        else 
+        else  
         {
             carsData = JsonUtility.FromJson<AgentsData>(www.downloadHandler.text);
 
             foreach(AgentData agent in carsData.positions)
             {
-                Vector3 newAgentPosition = new Vector3(agent.x, agent.y, agent.z);
 
-                    if(!started)
-                    {
+                if ( agent.arrived && !agents.TryGetValue(agent.id, out _) ){
+                    GameObject agentToRemove = agents[agent.id];
+                    Destroy(agentToRemove);
+                    agents.Remove(agent.id); 
+                } else { 
+
+                    Vector3 newAgentPosition = new Vector3(agent.x, agent.y, agent.z - 1);
+
+                    if(!agents.TryGetValue(agent.id, out _))
+                    { 
                         prevPositions[agent.id] = newAgentPosition;
-                        agents[agent.id] = Instantiate(carPrefab1, newAgentPosition, Quaternion.identity);
+                        float r = UnityEngine.Random.value;
+                        if (r < 0.25) {
+                            agents[agent.id] = Instantiate(carPrefab1, newAgentPosition, Quaternion.identity);
+                        } else if (r < 0.50) {
+                            agents[agent.id] = Instantiate(carPrefab2, newAgentPosition, Quaternion.identity);
+                        } else if (r < 0.75) {
+                            agents[agent.id] = Instantiate(carPrefab3, newAgentPosition, Quaternion.identity);
+                        } else {
+                            agents[agent.id] = Instantiate(carPrefab4, newAgentPosition, Quaternion.identity);
+                        }
                     }
                     else
                     {
@@ -160,6 +185,8 @@ public class AgentController : MonoBehaviour
                             prevPositions[agent.id] = currentPosition;
                         currPositions[agent.id] = newAgentPosition;
                     }
+                }
+
             }
 
             updated = true;
@@ -173,16 +200,44 @@ public class AgentController : MonoBehaviour
         yield return www.SendWebRequest();
  
         if (www.result != UnityWebRequest.Result.Success)
-            Debug.Log(www.error);
+            Debug.Log(www.error);  
         else 
         {
             trafficLightsData = JsonUtility.FromJson<AgentsData>(www.downloadHandler.text);
-
+    
             Debug.Log(trafficLightsData.positions);
 
-            foreach(AgentData obstacle in trafficLightsData.positions)
+            foreach(AgentData obstacle in trafficLightsData.positions) 
             {
-                Instantiate(trafficLightPrefabGreen, new Vector3(obstacle.x, obstacle.y, obstacle.z), Quaternion.identity);
+                if(!trafficLights.TryGetValue(obstacle.id, out _))
+                {
+                    if(obstacle.direction == "U" || obstacle.direction == "A"){
+                        trafficLights[obstacle.id] = Instantiate( 
+                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
+                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.Euler(0, 90, 0)
+                    );
+                    } else {
+                        trafficLights[obstacle.id] = Instantiate( 
+                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
+                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.identity
+                    );
+                    }
+                } else 
+                {
+                    Destroy(trafficLights[obstacle.id]);
+                    if(obstacle.direction == "U" || obstacle.direction == "A"){
+                        trafficLights[obstacle.id] = Instantiate( 
+                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
+                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.Euler(0, 90, 0)
+                    );
+                    } else {
+                        trafficLights[obstacle.id] = Instantiate( 
+                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
+                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.identity
+                    );
+                    }
+                }
+                
             }
         }
     }

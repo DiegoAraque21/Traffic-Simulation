@@ -11,7 +11,8 @@ class Destination(Agent):
 
 
     def step(self):
-        self.clean_cars()
+        # self.clean_cars()
+        pass
         
 
     def clean_cars(self):

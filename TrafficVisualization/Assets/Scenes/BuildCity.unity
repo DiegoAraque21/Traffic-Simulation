@@ -333,9 +333,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layout: {fileID: 4900000, guid: 78ad530ecd39ea0eb99db7562637e3bc, type: 3}
   roadPrefab: {fileID: 3240343348373693069, guid: 646fc54ff3078ce94bbdbd0f0d4c4a05, type: 3}
-  buildingPrefab: {fileID: 33555395739272859, guid: 10a584233fb38a918af771ddce837268, type: 3}
-  building2Prefab: {fileID: 33555395739272859, guid: aa8a12eb3441a47739d221ac7e15e417, type: 3}
-  building3Prefab: {fileID: 33555395739272859, guid: 3fc8672a7f9b34b6ba84a5f6b959cd79, type: 3}
+  buildingPrefab: {fileID: 33555395739272859, guid: 3adf6c8df1c2e4e089a59a96525e6cbc, type: 3}
+  building2Prefab: {fileID: 33555395739272859, guid: 409c32e23683248e7a3e08dd75644299, type: 3}
+  building3Prefab: {fileID: 33555395739272859, guid: 67f59a0ae910141579d8adab7f80705a, type: 3}
   fountainPrefab: {fileID: 630408637666079008, guid: 2c38ead63e76e40098ccdf05835136b8, type: 3}
   semaphorePrefab: {fileID: 8102729382312259521, guid: ec03db3fda9c46458bf4fb4f61cc11bd, type: 3}
   semaphoreRedPrefab: {fileID: 8102729382312259521, guid: aca189167513a48e19565e8def76d6a9, type: 3}

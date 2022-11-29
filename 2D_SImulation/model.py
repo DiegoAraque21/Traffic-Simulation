@@ -50,7 +50,7 @@ class RandomModel(Model):
                     elif col in ["U", "R", "L", "A"]:
                         # Place traffic light agent
                         tl_id = f"tl_{r*self.width+c}"
-                        agent = Traffic_Light(tl_id, self, False if (col == "U" or col =="A") else True, int(dataDictionary[col]), col)
+                        agent = Traffic_Light(tl_id, self, False if (col == "U" or col =="A") else True, int(dataDictionary[col]), col, col)
                         self.grid.place_agent(agent, (c, self.height - r - 1))
                         self.schedule.add(agent)
 
@@ -103,7 +103,7 @@ class RandomModel(Model):
         for cell in self.spawn_cars_cells:
             
             # Spawn with probability
-            if self.random.random() < 0.2:
+            if self.random.random() < 0.7:
                 destination = self.random.choice(self.destinations) # Random destination
                 cell_agents = self.get_cell_agents(cell) # Get cell agents
 

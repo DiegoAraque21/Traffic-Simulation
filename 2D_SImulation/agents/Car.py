@@ -33,7 +33,7 @@ class Car(Agent):
         """
 
         # If car has arrived to the end
-        if self.pos == None or self.pos == self.end:
+        if self.pos == self.end:
             self.arrived = True
             return # Await until destination agent removes car
 
