@@ -334,6 +334,7 @@ MonoBehaviour:
   roadPrefab: {fileID: 3240343348373693069, guid: 646fc54ff3078ce94bbdbd0f0d4c4a05, type: 3}
   buildingPrefab: {fileID: 33555395739272859, guid: 10a584233fb38a918af771ddce837268, type: 3}
   semaphorePrefab: {fileID: 8102729382312259521, guid: ec03db3fda9c46458bf4fb4f61cc11bd, type: 3}
+  semaphoreRedPrefab: {fileID: 0}
   car1: {fileID: 7288260569548534768, guid: 19e169984baec4ebb842ac6cbf6624b5, type: 3}
   car2: {fileID: 211005316340316182, guid: c4f8305bab6e849e587eec0d00676ab1, type: 3}
   car3: {fileID: 6744792557204430018, guid: 30620715fcb914feb81456d7ff9c8786, type: 3}

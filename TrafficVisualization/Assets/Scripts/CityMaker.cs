@@ -8,6 +8,7 @@ public class CityMaker : MonoBehaviour
     [SerializeField] GameObject roadPrefab;
     [SerializeField] GameObject buildingPrefab;
     [SerializeField] GameObject semaphorePrefab;
+    [SerializeField] GameObject semaphoreRedPrefab;
     [SerializeField] GameObject car1;
     [SerializeField] GameObject car2;
     [SerializeField] GameObject car3;
@@ -47,16 +48,16 @@ public class CityMaker : MonoBehaviour
                     tile = Instantiate(car1, position, Quaternion.identity);
                     tile.transform.parent = transform;
                 }
-                else if (position == new Vector3(25, 0, 0))
+                else if (position == new Vector3(23, 0, 0))
                 {
                     tile = Instantiate(car2, position, Quaternion.identity);
                     tile.transform.parent = transform;
-                } else if (position == new Vector3(0, 0, 25))
+                } else if (position == new Vector3(0, 0, 23))
                 {
                     tile = Instantiate(car3, position, Quaternion.identity);
                     tile.transform.parent = transform;
                 }
-                else if (position == new Vector3(25,0,25))
+                else if (position == new Vector3(23,0,23))
                 {
                     tile = Instantiate(car4, position, Quaternion.identity);
                     tile.transform.parent = transform;
@@ -71,16 +72,16 @@ public class CityMaker : MonoBehaviour
                     tile = Instantiate(car1, position, Quaternion.identity);
                     tile.transform.parent = transform;
                 }
-                else if (position == new Vector3(25, 0, 0))
+                else if (position == new Vector3(23, 0, 0))
                 {
                     tile = Instantiate(car2, position, Quaternion.identity);
                     tile.transform.parent = transform;
-                } else if (position == new Vector3(0, 0, 25))
+                } else if (position == new Vector3(0, 0, 23))
                 {
                     tile = Instantiate(car3, position, Quaternion.identity);
                     tile.transform.parent = transform;
                 }
-                else if (position == new Vector3(25,0,25))
+                else if (position == new Vector3(23,0,23))
                 {
                     tile = Instantiate(car4, position, Quaternion.identity);
                     tile.transform.parent = transform;
@@ -88,14 +89,14 @@ public class CityMaker : MonoBehaviour
                 tile = Instantiate(roadPrefab, position, Quaternion.Euler(0, 90, 0));
                 tile.transform.parent = transform;
                 x += 1;
-            } else if (tiles[i] == 's') {
+            } else if (tiles[i] == 'L' || tiles[i] == 'R') {
                 position = new Vector3(x * tileSize, 0, y * tileSize);
                 tile = Instantiate(roadPrefab, position, Quaternion.identity);
                 tile.transform.parent = transform;
                 tile = Instantiate(semaphorePrefab, position, Quaternion.identity);
                 tile.transform.parent = transform;
                 x += 1;
-            } else if (tiles[i] == 'S') {
+            } else if (tiles[i] == 'U' || tiles[i] == 'A') {
                 position = new Vector3(x * tileSize, 0, y * tileSize);
                 tile = Instantiate(roadPrefab, position, Quaternion.Euler(0, 90, 0));
                 tile.transform.parent = transform;

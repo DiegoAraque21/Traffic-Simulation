@@ -29,7 +29,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2502669317982801549}
+  - {fileID: 8160961931285168939}
   m_Father: {fileID: 3562865109167554097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -108,12 +110,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3070091233182780484}
   m_LocalRotation: {x: -0.044295218, y: 0.05207189, z: 0.22665069, w: 0.97157395}
-  m_LocalPosition: {x: -1.75, y: 0.07, z: 0.62}
-  m_LocalScale: {x: 6.6666646, y: 6.666666, z: 6.6666646}
+  m_LocalPosition: {x: -0.753, y: 0.727, z: 1.61}
+  m_LocalScale: {x: 6.6666646, y: 6.6666656, z: 6.6666656}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3562865109167554097}
-  m_RootOrder: 2
+  m_Father: {fileID: 4312716674100070539}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -6.297, y: 4.68, z: 26.005}
 --- !u!108 &4100566383488474259
 Light:
@@ -124,7 +126,7 @@ Light:
   m_GameObject: {fileID: 3070091233182780484}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 1
+  m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.3
@@ -202,12 +204,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3370779719688472655}
   m_LocalRotation: {x: -0.044295218, y: 0.05207189, z: 0.22665069, w: 0.97157395}
-  m_LocalPosition: {x: 0.147, y: 0.085, z: 0.62}
-  m_LocalScale: {x: 6.6666646, y: 6.666666, z: 6.6666646}
+  m_LocalPosition: {x: 0.71, y: 0.72, z: 1.63}
+  m_LocalScale: {x: 6.6666646, y: 6.6666656, z: 6.6666656}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3562865109167554097}
-  m_RootOrder: 1
+  m_Father: {fileID: 4312716674100070539}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -6.297, y: 4.68, z: 26.005}
 --- !u!108 &4405343832460592699
 Light:
@@ -218,7 +220,7 @@ Light:
   m_GameObject: {fileID: 3370779719688472655}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 1
+  m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.3
@@ -300,8 +302,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4312716674100070539}
-  - {fileID: 2502669317982801549}
-  - {fileID: 8160961931285168939}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
