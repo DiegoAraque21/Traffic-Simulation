@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136675311}
   m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 12, y: -527, z: -1.5}
+  m_LocalPosition: {x: 12, y: 10, z: -1.5}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -311,6 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1457529884}
   - component: {fileID: 1457529883}
+  - component: {fileID: 1457529885}
   m_Layer: 0
   m_Name: City
   m_TagString: Untagged
@@ -358,6 +359,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1457529885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457529882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983bc179e80f15347a79dd7b044746e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carPrefab1: {fileID: 7288260569548534768, guid: 19e169984baec4ebb842ac6cbf6624b5, type: 3}
+  carPrefab2: {fileID: 211005316340316182, guid: c4f8305bab6e849e587eec0d00676ab1, type: 3}
+  carPrefab3: {fileID: 6744792557204430018, guid: 30620715fcb914feb81456d7ff9c8786, type: 3}
+  carPrefab4: {fileID: 2695587125106248610, guid: 5b96101adef3447d48294d2ab5a35f10, type: 3}
+  trafficLightPrefabGreen: {fileID: 8102729382312259521, guid: ec03db3fda9c46458bf4fb4f61cc11bd, type: 3}
+  trafficLightPrefabRed: {fileID: 8102729382312259521, guid: aca189167513a48e19565e8def76d6a9, type: 3}
+  timeToUpdate: 5
 --- !u!850595691 &1515965292
 LightingSettings:
   m_ObjectHideFlags: 0
