@@ -1,63 +1,59 @@
+from flask import Flask, request, jsonify
 from model import RandomModel
-from mesa.visualization.modules import CanvasGrid
-from mesa.visualization.ModularVisualization import ModularServer
-from model import Car, Destination, Road, Traffic_Light, Obstacle, ObstacleCar
+from agents.Car import Car
+from agents.Traffic_Light import Traffic_Light
 
-def agent_portrayal(agent):
-    if agent is None: return
-    
-    portrayal = {"Shape": "rect",
-                 "Filled": "true",
-                 "Layer": 1,
-                 "w": 1,
-                 "h": 1
-                 }
+# Size of the board:
+randomModel = None
+currentStep = 0
+app = Flask("Loader Robots Simulation")
 
-    if (isinstance(agent, Road)):
-        portrayal["Color"] = "grey"
-        portrayal["Layer"] = 0
-    
-    if (isinstance(agent, Destination)):
-        portrayal["Color"] = "lightgreen"
-        portrayal["Layer"] = 0
+@app.route('/init', methods=['POST', 'GET'])
+def initModel():
+    global currentStep, randomModel
 
-    if (isinstance(agent, Traffic_Light)):
-        portrayal["Color"] = "red" if not agent.state else "green"
-        portrayal["Layer"] = 1
-        portrayal["w"] = 0.8
-        portrayal["h"] = 0.8
+    if request.method == 'POST':
+        # Get data from unity
+        currentStep = 0
 
-    if (isinstance(agent, Obstacle)):
-        portrayal["Color"] = "cadetblue"
-        portrayal["Layer"] = 0
-        portrayal["w"] = 0.8
-        portrayal["h"] = 0.8
+        # Create model
+        randomModel = RandomModel()
 
-    if (isinstance(agent, Car)):
-        portrayal["Color"] = "blue"
-        portrayal["Layer"] = 2
-        portrayal["r"] = 0.5
+        return jsonify({"message": "Parameters recieved, model initiated."})
 
-    if (isinstance(agent, ObstacleCar)):
-        portrayal["Color"] = "brown"
-        portrayal["Layer"] = 2
-        portrayal["r"] = 0.5
+@app.route('/getCars', methods=['GET'])
+def getAgents():
+    global randomModel
 
-    return portrayal
+    if request.method == 'GET':
+        agentPositions = []
+        for (w, x, z) in randomModel.grid.coord_iter():
+            for agent in w:
+                if isinstance(agent, Car):
+                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y":0, "z":z})
+        
+        return jsonify({'positions':agentPositions})
 
-width = 0
-height = 0
+@app.route('/getTrafficLights', methods=['GET'])
+def getBoxes():
+    global randomModel
 
-with open('./map_templates/2022_base.txt') as baseFile:
-    lines = baseFile.readlines()
-    width = len(lines[0])-1
-    height = len(lines)
+    if request.method == 'GET':
+        agentPositions = []
+        for (w, x, z) in randomModel.grid.coord_iter():
+            for agent in w:
+                if isinstance(agent, Traffic_Light):
+                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y": 0, "z":z})
 
-model_params = {"N":5}
+        return jsonify({'positions': agentPositions})
 
-grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
+@app.route('/update', methods=['GET'])
+def updateModel():
+    global currentStep, randomModel
+    if request.method == 'GET':
+        randomModel.step()
+        currentStep += 1
+        return jsonify({'message': f'Model updated to step {currentStep}.', 'currentStep':currentStep})
 
-server = ModularServer(RandomModel, [grid], "Traffic Base", model_params)
-                       
-server.port = 8521 # The default
-server.launch()
+if __name__=='__main__':
+    app.run(host="localhost", port=8585, debug=True)

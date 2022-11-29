@@ -37,8 +37,8 @@ public class AgentController : MonoBehaviour
 {
     // private string url = "https://agents.us-south.cf.appdomain.cloud/";
     string serverUrl = "http://localhost:8585";
-    string getAgentsEndpoint = "/getAgents";
-    string getObstaclesEndpoint = "/getObstacles";
+    string getAgentsEndpoint = "/getCars";
+    string getObstaclesEndpoint = "/getTrafficLights";
     string sendConfigEndpoint = "/init";
     string updateEndpoint = "/update";
     AgentsData agentsData, obstacleData;
@@ -47,15 +47,14 @@ public class AgentController : MonoBehaviour
 
     bool updated = false, started = false;
 
-    public GameObject agentPrefab, obstaclePrefab, floor;
-    public int NAgents, width, height;
+    public GameObject carPrefab1, carPrefab2, carPrefab3, carPrefab4, trafficLightPrefab;
     public float timeToUpdate = 5.0f;
     private float timer, dt;
 
     void Start()
     {
-        agentsData = new AgentsData();
-        obstacleData = new AgentsData();
+        carsData = new AgentsData();
+        trafficLightsData = new AgentsData();
 
         prevPositions = new Dictionary<string, Vector3>();
         currPositions = new Dictionary<string, Vector3>();
@@ -110,7 +109,8 @@ public class AgentController : MonoBehaviour
             Debug.Log(www.error);
         else 
         {
-            StartCoroutine(GetAgentsData());
+            StartCoroutine(GetCarsData());
+            StartCoroutine(GetTrafficLightsData());
         }
     }
 
@@ -118,11 +118,7 @@ public class AgentController : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("NAgents", NAgents.ToString());
-        form.AddField("width", width.ToString());
-        form.AddField("height", height.ToString());
-
-        UnityWebRequest www = UnityWebRequest.Post(serverUrl + sendConfigEndpoint, form);
+        UnityWebRequest www = UnityWebRequest.Post(serverUrl + sendConfigEndpoint);
         www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         yield return www.SendWebRequest();
@@ -135,12 +131,12 @@ public class AgentController : MonoBehaviour
         {
             Debug.Log("Configuration upload complete!");
             Debug.Log("Getting Agents positions");
-            StartCoroutine(GetAgentsData());
-            StartCoroutine(GetObstacleData());
+            StartCoroutine(GetCarsData());
+            StartCoroutine(GetTrafficLightsData());
         }
     }
 
-    IEnumerator GetAgentsData() 
+    IEnumerator GetCarsData() 
     {
         UnityWebRequest www = UnityWebRequest.Get(serverUrl + getAgentsEndpoint);
         yield return www.SendWebRequest();
@@ -174,7 +170,7 @@ public class AgentController : MonoBehaviour
         }
     }
 
-    IEnumerator GetObstacleData() 
+    IEnumerator GetTrafficLightsData() 
     {
         UnityWebRequest www = UnityWebRequest.Get(serverUrl + getObstaclesEndpoint);
         yield return www.SendWebRequest();
