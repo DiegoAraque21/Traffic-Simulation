@@ -127,8 +127,8 @@ public class CityMaker : MonoBehaviour
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == 'F'){
-                position = new Vector3(x * tileSize, 0, y * tileSize);
-                tile = Instantiate(fountainPrefab, position, Quaternion.Euler(0, 0, 0));
+                position = new Vector3(x * tileSize + 0.455f, 0, y * tileSize + 0.462f);
+                tile = Instantiate(fountainPrefab, position, Quaternion.identity);
                 tile.GetComponent<Renderer>().materials[0].color = Color.green;
                 tile.transform.parent = transform;
                 x += 1;
