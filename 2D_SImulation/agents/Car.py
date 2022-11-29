@@ -254,20 +254,6 @@ class Car(Agent):
         return None
 
 
-    def get_cell_agents(self, position):
-        """Get list of agents of a cell."""
-        # Get neighbors including center cell
-        neighbors = self.model.grid.get_neighbors(position, False, True)
-
-        # Get agents in position
-        agents = []
-        for n in neighbors:
-            if n.pos == position:
-                agents.append(n)
-
-        return agents
-
-
     def check_road_availability(self, position):
         """Check if a road is available."""
         # Array that contains roads to check
@@ -288,7 +274,7 @@ class Car(Agent):
         available = True
         for road in roads_to_check:
             # Get road agents
-            agents = self.get_cell_agents(road)
+            agents = self.model.get_cell_agents(road)
 
             # Variables to store if agents were founded
             found_road = False
@@ -334,7 +320,7 @@ class Car(Agent):
         n_cars = 0
         for cell in cells:
             # Get cell agents
-            agents = self.get_cell_agents(cell)
+            agents = self.model.get_cell_agents(cell)
             for a in agents:
                 # If there is a car
                 if isinstance(a, Car) or isinstance(a, ObstacleCar):
