@@ -91,7 +91,7 @@ class RandomModel(Model):
         for cell in self.spawn_cars_cells:
             
             # Spawn with probability
-            if self.random.random() < 0.7:
+            if self.random.random() < 0.5:
                 destination = self.random.choice(self.destinations) # Random destination
                 cell_agents = self.get_cell_agents(cell) # Get cell agents
 
