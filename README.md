@@ -12,7 +12,7 @@ Press the code button and copy the htttps link
 
 #### Packages
 
-To run this project you will need miniconda or anaconda, and we are using version 3.8 of python. Also to run the simulation on unity it's necessary to have version 2021.3.12f1 installed.
+To run this project you will need miniconda or anaconda, and we are using version 3.8 of python. Also, to run the simulation on unity it's necessary to have version 2021.3.12f1 installed.
 
 For everything to work accordingly, and if you met the requirements above you will need to follow this steps:
 
