@@ -38,7 +38,6 @@ public class CityMaker : MonoBehaviour
         // and move down
         // Remove the last enter, and one more to start at 0
         int y = tiles.Split('\n').Length - 2;
-        Debug.Log(y);
 
         Vector3 position;
         GameObject tile;
@@ -81,7 +80,7 @@ public class CityMaker : MonoBehaviour
                 } else {
                     tile = Instantiate(building3Prefab, position, Quaternion.identity);
                 }
-                tile.transform.localScale = new Vector3(1, Random.Range(0.5f, 2.0f), 1);
+                tile.transform.localScale = new Vector3(1, Random.Range(0.5f, 3.0f), 1);
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == 'F'){

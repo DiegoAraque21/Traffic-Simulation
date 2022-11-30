@@ -19,38 +19,34 @@ public class AgentData
     public AgentData(string id, string direction, float x, float y, float z, bool green = false, bool arrived = false)
     {
         this.id = id;
+        this.direction = direction;
         this.x = x;
         this.y = y;
         this.z = z;
         this.green = green;
         this.arrived = arrived;
-        this.direction = direction;
     }
-
-
 } 
 
 [Serializable]
-
 public class AgentsData
 {
     public List<AgentData> positions;
-
     public AgentsData() => this.positions = new List<AgentData>();
 }
 
 public class AgentController : MonoBehaviour
 {
-    // private string url = "https://agents.us-south.cf.appdomain.cloud/";
     string serverUrl = "http://localhost:8585";
-    string getAgentsEndpoint = "/getCars";
-    string getObstaclesEndpoint = "/getTrafficLights";
     string sendConfigEndpoint = "/init";
     string updateEndpoint = "/update";
+    string getAgentsEndpoint = "/getCars";
+    string getObstaclesEndpoint = "/getTrafficLights";
     AgentsData carsData, trafficLightsData;
     Dictionary<string, GameObject> agents;
     Dictionary<string, GameObject> trafficLights;
     Dictionary<string, Vector3> prevPositions, currPositions;
+    Dictionary<string, int> tlRotations;
 
     bool updated = false, started = false;
 
@@ -68,6 +64,12 @@ public class AgentController : MonoBehaviour
 
         agents = new Dictionary<string, GameObject>();
         trafficLights = new Dictionary<string, GameObject>();
+
+        tlRotations = new Dictionary<string, int>();
+        tlRotations["U"] = -90;
+        tlRotations["A"] = 90;
+        tlRotations["R"] = 0;
+        tlRotations["L"] = 180;
 
         
         timer = timeToUpdate;
@@ -100,9 +102,6 @@ public class AgentController : MonoBehaviour
                 agents[agent.Key].transform.localPosition = interpolated;
                 if(direction != Vector3.zero) agents[agent.Key].transform.rotation = Quaternion.LookRotation(direction);
             }
-
-            // float t = (timer / timeToUpdate);
-            // dt = t * t * ( 3f - 2f*t);
         }
     }
  
@@ -204,40 +203,23 @@ public class AgentController : MonoBehaviour
         else 
         {
             trafficLightsData = JsonUtility.FromJson<AgentsData>(www.downloadHandler.text);
-    
-            Debug.Log(trafficLightsData.positions);
 
-            foreach(AgentData obstacle in trafficLightsData.positions) 
+            foreach(AgentData trafficLight in trafficLightsData.positions) 
             {
-                if(!trafficLights.TryGetValue(obstacle.id, out _))
+                if(!trafficLights.TryGetValue(trafficLight.id, out _))
                 {
-                    if(obstacle.direction == "U" || obstacle.direction == "A"){
-                        trafficLights[obstacle.id] = Instantiate( 
-                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
-                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.Euler(0, 90, 0)
+                    trafficLights[trafficLight.id] = Instantiate( 
+                        trafficLight.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
+                        new Vector3(trafficLight.x, trafficLight.y, trafficLight.z - 1), Quaternion.Euler(0, tlRotations[trafficLight.direction], 0)
                     );
-                    } else {
-                        trafficLights[obstacle.id] = Instantiate( 
-                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
-                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.identity
-                    );
-                    }
                 } else 
                 {
-                    Destroy(trafficLights[obstacle.id]);
-                    if(obstacle.direction == "U" || obstacle.direction == "A"){
-                        trafficLights[obstacle.id] = Instantiate( 
-                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
-                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.Euler(0, 90, 0)
+                    Destroy(trafficLights[trafficLight.id]);
+                    trafficLights[trafficLight.id] = Instantiate( 
+                        trafficLight.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
+                        new Vector3(trafficLight.x, trafficLight.y, trafficLight.z - 1), Quaternion.Euler(0, tlRotations[trafficLight.direction], 0)
                     );
-                    } else {
-                        trafficLights[obstacle.id] = Instantiate( 
-                        obstacle.green ? trafficLightPrefabGreen : trafficLightPrefabRed, 
-                        new Vector3(obstacle.x, obstacle.y, obstacle.z - 1), Quaternion.identity
-                    );
-                    }
                 }
-                
             }
         }
     }
