@@ -2,6 +2,10 @@
 
 ## Manual de Instalación
 
+#### Miniconda
+
+Enter the following link, and install the 3.8 version for your OS: https://docs.conda.io/en/latest/miniconda.html
+
 #### Repository
 
 Press the code button and copy the htttps link
