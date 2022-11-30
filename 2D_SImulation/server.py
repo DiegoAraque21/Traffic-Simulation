@@ -6,14 +6,13 @@ from agents.Traffic_Light import Traffic_Light
 # Size of the board:
 randomModel = None
 currentStep = 0
-app = Flask("Loader Robots Simulation")
+app = Flask("Traffic Simulation")
 
 @app.route('/init', methods=['POST', 'GET'])
 def initModel():
     global currentStep, randomModel
 
     if request.method == 'POST':
-        # Get data from unity
         currentStep = 0
 
         # Create model
@@ -49,7 +48,14 @@ def getTrafficLights():
         for (w, x, z) in randomModel.grid.coord_iter():
             for agent in w:
                 if isinstance(agent, Traffic_Light):
-                    agentPositions.append({"id": str(agent.unique_id), "x": x, "y": 0, "z":z, "green": agent.state, "direction": agent.direction})
+                    agentPositions.append({
+                        "id": str(agent.unique_id), 
+                        "x": x, 
+                        "y": 0, 
+                        "z":z, 
+                        "green": agent.state, 
+                        "direction": agent.direction
+                    })
 
         return jsonify({'positions': agentPositions})
 

@@ -3,7 +3,6 @@ from mesa.time import RandomActivation
 from mesa.space import MultiGrid
 from agents.Car import Car
 from agents.Destination import Destination
-from agents.ObstacleCar import ObstacleCar
 from agents.Obstacle import Obstacle
 from agents.Road import Road
 from agents.Traffic_Light import Traffic_Light
@@ -12,8 +11,6 @@ import json
 class RandomModel(Model):
     """ 
     Creates a new model with random agents.
-    Args:
-        N: Number of agents in the simulation
     """
     def __init__(self):
 
@@ -73,15 +70,6 @@ class RandomModel(Model):
 
         # Spawn initial cars
         self.spawn_cars()        
-
-        # obstacle_cars = [(19,23), (20,23), (21,23), (22,23), (22,22), (22,21)]
-        # for i in range(len(obstacle_cars)):
-        #     obstacle_car = ObstacleCar(9000+i, self)
-        #     self.grid.place_agent(obstacle_car, obstacle_cars[i])
-
-        # car = Car(f"c_{self.cars_counter}", self, self.destinations[12])
-        # self.grid.place_agent(car, (22, 17))
-        # self.schedule.add(car)
 
 
     def step(self):

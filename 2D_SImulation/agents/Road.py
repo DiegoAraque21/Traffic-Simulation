@@ -13,7 +13,6 @@ class Road(Agent):
             direction: Direction where the cars can move
         """
         super().__init__(unique_id, model)
-        self.available = True
         self.direction = direction
 
     def step(self):

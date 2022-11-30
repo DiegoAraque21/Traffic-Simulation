@@ -11,16 +11,4 @@ class Destination(Agent):
 
 
     def step(self):
-        # self.clean_cars()
         pass
-        
-
-    def clean_cars(self):
-        """Remove cars that are in destiny"""
-        # Get destination agents
-        agents = self.model.get_cell_agents(self.pos)
-
-        # Remove cars
-        for a in agents:
-            if isinstance(a, Car):
-                self.model.grid.remove_agent(a)

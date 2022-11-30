@@ -1,6 +1,5 @@
 from mesa import Agent
 from agents.Road import Road
-from agents.ObstacleCar import ObstacleCar
 from queue import PriorityQueue
 import math
 
@@ -289,7 +288,7 @@ class Car(Agent):
                 if isinstance(a, Road):
                     found_road = True
                 # Mark if its a car
-                if isinstance(a, Car) or isinstance(a, ObstacleCar):
+                if isinstance(a, Car):
                     found_car = True
 
             # If it found a road and a car, the cell is not available
@@ -327,7 +326,7 @@ class Car(Agent):
             agents = self.model.get_cell_agents(cell)
             for a in agents:
                 # If there is a car
-                if isinstance(a, Car) or isinstance(a, ObstacleCar):
+                if isinstance(a, Car):
                     n_cars += 1 # Increase counter
 
         # iF true is there are many cars, because there is traffic
