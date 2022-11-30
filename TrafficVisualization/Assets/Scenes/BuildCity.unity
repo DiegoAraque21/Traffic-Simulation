@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -671,8 +671,8 @@ MonoBehaviour:
   layout: {fileID: 4900000, guid: 78ad530ecd39ea0eb99db7562637e3bc, type: 3}
   roadPrefab: {fileID: 3240343348373693069, guid: 646fc54ff3078ce94bbdbd0f0d4c4a05, type: 3}
   buildingPrefab: {fileID: 33555395739272859, guid: 3adf6c8df1c2e4e089a59a96525e6cbc, type: 3}
-  building2Prefab: {fileID: 33555395739272859, guid: 409c32e23683248e7a3e08dd75644299, type: 3}
-  building3Prefab: {fileID: 33555395739272859, guid: 67f59a0ae910141579d8adab7f80705a, type: 3}
+  building2Prefab: {fileID: 1296028556637446031, guid: 338217d75ae1f4d7b8414d7f00407e0a, type: 3}
+  building3Prefab: {fileID: 1296028556637446031, guid: b66ff8af7e23d40e3b1c4625143bd09b, type: 3}
   fountainPrefab: {fileID: 630408637666079008, guid: 2c38ead63e76e40098ccdf05835136b8, type: 3}
   lampPrefab: {fileID: 5991658773640122871, guid: 96c8de1b274b6f24797fcf867673fbd9, type: 3}
   semaphorePrefab: {fileID: 4753726719977707268, guid: 6549aae32f8da6448a42b731d9af9133, type: 3}
