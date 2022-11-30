@@ -74,9 +74,9 @@ public class CityMaker : MonoBehaviour
                 position = new Vector3(x * tileSize, 0, y * tileSize);
                 // random number between 0 and 1
                 float r = Random.value;
-                if (r < 0.33) {
+                if (r < 0.20) {
                     tile = Instantiate(buildingPrefab, position, Quaternion.identity);
-                } else if (r < 0.66) {
+                } else if (r < 0.70) {
                     tile = Instantiate(building2Prefab, position, Quaternion.identity);
                 } else {
                     tile = Instantiate(building3Prefab, position, Quaternion.identity);
