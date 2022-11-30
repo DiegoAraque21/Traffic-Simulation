@@ -10,6 +10,7 @@ public class CityMaker : MonoBehaviour
     [SerializeField] GameObject building2Prefab;
     [SerializeField] GameObject building3Prefab;
     [SerializeField] GameObject fountainPrefab;
+    [SerializeField] GameObject lampPrefab;
     [SerializeField] GameObject semaphorePrefab;
     [SerializeField] GameObject semaphoreRedPrefab;
     [SerializeField] GameObject car1;
@@ -80,12 +81,17 @@ public class CityMaker : MonoBehaviour
                 } else {
                     tile = Instantiate(building3Prefab, position, Quaternion.identity);
                 }
-                tile.transform.localScale = new Vector3(1, Random.Range(0.5f, 3.0f), 1);
+                tile.transform.localScale = new Vector3(1, Random.Range(0.6f, 3.0f), 1);
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == 'F'){
-                position = new Vector3(x * tileSize + 0.455f, 0, y * tileSize + 0.462f);
+                position = new Vector3(x * tileSize, 0, y * tileSize);
                 tile = Instantiate(fountainPrefab, position, Quaternion.identity);
+                tile.transform.parent = transform;
+                x += 1;
+            } else if (tiles[i] == 'G'){
+                position = new Vector3(x * tileSize, 0, y * tileSize);
+                tile = Instantiate(lampPrefab, position, Quaternion.identity);
                 tile.transform.parent = transform;
                 x += 1;
             } else if (tiles[i] == '\n') {

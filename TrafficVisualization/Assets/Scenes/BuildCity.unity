@@ -337,6 +337,7 @@ MonoBehaviour:
   building2Prefab: {fileID: 33555395739272859, guid: 409c32e23683248e7a3e08dd75644299, type: 3}
   building3Prefab: {fileID: 33555395739272859, guid: 67f59a0ae910141579d8adab7f80705a, type: 3}
   fountainPrefab: {fileID: 630408637666079008, guid: 2c38ead63e76e40098ccdf05835136b8, type: 3}
+  lampPrefab: {fileID: 5991658773640122871, guid: 96c8de1b274b6f24797fcf867673fbd9, type: 3}
   semaphorePrefab: {fileID: 4753726719977707268, guid: 6549aae32f8da6448a42b731d9af9133, type: 3}
   semaphoreRedPrefab: {fileID: 4753726719977707268, guid: 1e599ba5a698547498a64bb4ca77a183, type: 3}
   car1: {fileID: 7288260569548534768, guid: 19e169984baec4ebb842ac6cbf6624b5, type: 3}
