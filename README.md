@@ -12,8 +12,7 @@ Press the code button and copy the htttps link
 
 - Enter a terminal and clone the repository with the following command:
 
-- git clone link-copied
-
+- git clone https://github.com/DiegoAraque21/Traffic-Simulation.git
 #### Packages
 
 To run this project you will need miniconda or anaconda, and we are using version 3.8 of python. Also, to run the simulation on unity it's necessary to have version 2021.3.12f1 installed.
