@@ -37,7 +37,7 @@ def getAgents():
                         "arrived": agent.arrived
                     })
         
-        return jsonify({'positions':agentPositions})
+        return jsonify({'positions':agentPositions, "activeCars": randomModel.active_cars})
 
 @app.route('/getTrafficLights', methods=['GET'])
 def getTrafficLights():

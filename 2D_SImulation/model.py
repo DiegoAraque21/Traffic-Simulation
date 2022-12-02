@@ -27,6 +27,7 @@ class RandomModel(Model):
         }
         self.running = True
         self.cars_counter = 0
+        self.active_cars = 0
 
         with open('./map_templates/2022_base.txt') as baseFile:
             lines = baseFile.readlines()
@@ -76,6 +77,9 @@ class RandomModel(Model):
         '''Advance the model by one step.'''
         # Spawn cars randomly
         self.spawn_cars()
+
+        # Count activer cars
+        self.count_active_cars()
         
         # Change traffic lights each 10 steps
         if self.schedule.steps % 10 == 0:
@@ -91,7 +95,7 @@ class RandomModel(Model):
         for cell in self.spawn_cars_cells:
             
             # Spawn with probability
-            if self.random.random() < 0.5:
+            if self.random.random() < 0.7:
                 destination = self.random.choice(self.destinations) # Random destination
                 cell_agents = self.get_cell_agents(cell) # Get cell agents
 
@@ -107,6 +111,17 @@ class RandomModel(Model):
                     self.grid.place_agent(car, cell)
                     self.schedule.add(car)
                     self.cars_counter += 1
+
+    
+    def count_active_cars(self):
+        """Count active cars (hadn't arrive)."""
+        counter = 0
+        for (content, x, y) in self.grid.coord_iter():
+            for a in content:
+                if isinstance(a, Car):
+                    if not a.arrived: 
+                        counter += 1
+        self.active_cars = counter
 
 
     def get_cell_agents(self, position):

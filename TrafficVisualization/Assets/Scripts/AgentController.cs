@@ -32,6 +32,7 @@ public class AgentData
 public class AgentsData
 {
     public List<AgentData> positions;
+    public int activeCars;
     public AgentsData() => this.positions = new List<AgentData>();
 }
 
@@ -151,7 +152,7 @@ public class AgentController : MonoBehaviour
         else  
         {
             carsData = JsonUtility.FromJson<AgentsData>(www.downloadHandler.text);
-
+            Debug.Log("Cars: " + carsData.activeCars); // Number of cars in the grid
             foreach(AgentData agent in carsData.positions)
             {
 
